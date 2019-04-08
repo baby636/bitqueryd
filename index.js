@@ -11,6 +11,7 @@ const dbMapping = {
 const ops = ["db", "find", "aggregate", "sort", "project", "limit", "skip", "distinct"]
 var db, client
 var timeout = null
+var log_result = true
 var validate = function(r) {
   if (typeof r.v === 'undefined') {
     return { status: "invalid", result: false, errors: ["v missing"] }
@@ -80,6 +81,7 @@ var init = function(config) {
     let url = (config && config.url ? config.url : "mongodb://localhost:27017")
     let name = (config && config.name ? config.name : "bitdb")
     let sockTimeout = (config && config.timeout) ? config.timeout + 100 : 20100
+    log_result = (config && typeof config.log_result === 'boolean') ? config.log_result : true;
     if (/mongodb:.*/.test(url)) {
       MongoClient.connect(url, {
         useNewUrlParser: true,
@@ -141,7 +143,7 @@ var lookup = function(r, key, resfilter) {
           if (resfilter && resfilter.f && res.length > 0) {
             try {
               let f = resfilter.f;
-              let result = await jq.run(f, res)
+              let result = await jq.run(f, res, log_result)
               resolve({
                 name: key,
                 items: result
