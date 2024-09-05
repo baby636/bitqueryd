@@ -11,8 +11,8 @@
   "dependencies": {
     "bcode": "0.0.6",
     "dotenv": "^6.0.0",
-    "mongodb": "^3.1.4",
-    "fountainhead-bigjq": "0.0.13",
+    "mongodb": "^3.3.0",
+    "fountainhead-bigjq": "0.0.16",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
